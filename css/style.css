@@ -1,0 +1,116 @@
+/* Morimori Stock - Estilos principales */
+
+:root {
+  --mint: #b8d8c8;
+  --pink: #f3c6cf;
+  --cream: #fff9f2;
+  --text: #4a4a4a;
+  --white: #ffffff;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--cream);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  color: var(--text);
+}
+
+
+/* Encabezado */
+
+.header {
+  text-align: center;
+  padding: 30px 20px 20px;
+}
+
+
+.header h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+
+.header p {
+  margin-top: 8px;
+  opacity: 0.7;
+}
+
+
+/* Contenedor */
+
+.container {
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+}
+
+
+/* Menú */
+
+.menu {
+  display: grid;
+  gap: 14px;
+}
+
+
+.menu-btn {
+  width: 100%;
+  padding: 18px;
+  border: none;
+  border-radius: 18px;
+  background: var(--white);
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+  cursor: pointer;
+}
+
+
+.menu-btn:active {
+  transform: scale(0.97);
+}
+
+
+/* Área de contenido */
+
+#content {
+  margin-top: 25px;
+  background: var(--white);
+  border-radius: 20px;
+  padding: 25px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+
+#content h2 {
+  margin-top: 0;
+}
+
+
+/* Ajuste para iPhone */
+
+@media (max-width: 480px) {
+
+  .header h1 {
+    font-size: 26px;
+  }
+
+  .menu-btn {
+    font-size: 17px;
+    padding: 16px;
+  }
+
+}
