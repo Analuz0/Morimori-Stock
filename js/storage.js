@@ -11,7 +11,7 @@ const STORAGE_KEYS = {
 
 
 
-// Catálogo inicial Morimori
+// Catálogo Morimori
 
 const defaultProducts = [
 
@@ -118,7 +118,7 @@ active:true
 id:10,
 name:"Trenza frutos rojos",
 category:"Pan laminado",
-stockGroup:"trenza_frutos_rojos",
+stockGroup:"trenza",
 price:0,
 cafePrice:0,
 stock:0,
@@ -196,40 +196,38 @@ active:true
 
 
 
-// Inicializar
+// Inicialización temporal
+// Fuerza cargar catálogo nuevo
 
 function initializeStorage(){
 
-    const version = localStorage.getItem("morimori_catalog_version");
+
+    localStorage.removeItem(
+        STORAGE_KEYS.products
+    );
 
 
-    if(version !== "2"){
+    localStorage.setItem(
+        STORAGE_KEYS.products,
+        JSON.stringify(defaultProducts)
+    );
 
-        localStorage.setItem(
-            STORAGE_KEYS.products,
-            JSON.stringify(defaultProducts)
-        );
-
-
-        localStorage.setItem(
-            "morimori_catalog_version",
-            "2"
-        );
-
-    }
 
 
     if(!localStorage.getItem(STORAGE_KEYS.history)){
+
 
         localStorage.setItem(
             STORAGE_KEYS.history,
             JSON.stringify([])
         );
 
+
     }
 
+
 }
-}
+
 
 
 
@@ -241,6 +239,8 @@ function getProducts(){
     ) || [];
 
 }
+
+
 
 
 
@@ -256,6 +256,7 @@ function saveProducts(products){
 
 
 
+
 function getHistory(){
 
     return JSON.parse(
@@ -263,6 +264,7 @@ function getHistory(){
     ) || [];
 
 }
+
 
 
 
