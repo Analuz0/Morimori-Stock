@@ -279,5 +279,15 @@ function saveHistory(history){
         STORAGE_KEYS.history,
         JSON.stringify(history)
     );
+function getStockByGroup(stockGroup){
 
+    const products = getProducts();
+
+    const product = products.find(
+        p => p.stockGroup === stockGroup
+    );
+
+    return product ? product.stock : 0;
+
+}
 }
