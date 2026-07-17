@@ -179,3 +179,142 @@ function showInventory(){
 
 
 }
+function showProduction(){
+
+    const products = getProducts();
+
+
+    let html = `
+
+    <h2>➕ Producción</h2>
+
+    <label>
+        Producto
+    </label>
+
+    <select id="productionProduct">
+
+    `;
+
+
+    products.forEach(product => {
+
+        if(product.active){
+
+            html += `
+            <option value="${product.id}">
+                ${product.name}
+            </option>
+            `;
+
+        }
+
+    });
+
+
+    html += `
+
+    </select>
+
+
+    <label>
+        Cantidad
+    </label>
+
+    <input 
+        id="productionAmount"
+        type="number"
+        placeholder="Ej. 24"
+    >
+
+
+    <button 
+        class="menu-btn"
+        onclick="addProduction()">
+
+        Guardar producción
+
+    </button>
+
+    `;
+
+
+    content.innerHTML = html;
+
+}
+
+
+
+
+
+function addProduction(){
+
+
+    const productId = Number(
+        document.getElementById("productionProduct").value
+    );
+
+
+    const amount = Number(
+        document.getElementById("productionAmount").value
+    );
+
+
+    if(!amount || amount <= 0){
+
+        alert("Ingresa una cantidad válida");
+
+        return;
+
+    }
+
+
+
+    const products = getProducts();
+
+
+    const product = products.find(
+        p => p.id === productId
+    );
+
+
+
+    product.stock += amount;
+
+
+
+    saveProducts(products);
+
+
+
+    const history = getHistory();
+
+
+    history.push({
+
+        date: new Date().toLocaleString(),
+
+        type: "Producción",
+
+        product: product.name,
+
+        quantity: amount
+
+    });
+
+
+
+    saveHistory(history);
+
+
+
+    alert(
+        `✅ ${amount} ${product.name} agregados`
+    );
+
+
+
+    showInventory();
+
+
+}
