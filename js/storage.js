@@ -1,5 +1,5 @@
 // Morimori Stock
-// Sistema de almacenamiento local
+// Base de datos local
 
 
 const STORAGE_KEYS = {
@@ -11,78 +11,192 @@ const STORAGE_KEYS = {
 
 
 
-// Productos iniciales
+// Catálogo inicial Morimori
 
 const defaultProducts = [
 
-    {
-        id: 1,
-        name: "Croissant",
-        stock: 0,
-        active: true
-    },
+{
+id:1,
+name:"Croissant natural",
+category:"Croissant",
+stockGroup:"croissant",
+price:0,
+cafePrice:0,
+stock:0,
+active:true
+},
 
-    {
-        id: 2,
-        name: "Chocolatín",
-        stock: 0,
-        active: true
-    },
+{
+id:2,
+name:"Croissant nuez",
+category:"Croissant",
+stockGroup:"croissant",
+price:0,
+cafePrice:0,
+stock:0,
+active:true
+},
 
-    {
-        id: 3,
-        name: "Suizo",
-        stock: 0,
-        active: true
-    },
+{
+id:3,
+name:"Croissant moka",
+category:"Croissant",
+stockGroup:"croissant_moka",
+price:0,
+cafePrice:0,
+stock:0,
+active:true
+},
 
-    {
-        id: 4,
-        name: "Danesa",
-        stock: 0,
-        active: true
-    },
+{
+id:4,
+name:"Croissant macaron matcha frambuesa",
+category:"Croissant especial",
+stockGroup:"croissant_matcha",
+price:0,
+cafePrice:0,
+stock:0,
+active:true
+},
 
-    {
-        id: 5,
-        name: "Cruffin Guayaba",
-        stock: 0,
-        active: true
-    },
+{
+id:5,
+name:"Croissant macaron cherry cola",
+category:"Croissant especial",
+stockGroup:"croissant_cherry",
+price:0,
+cafePrice:0,
+stock:0,
+active:true
+},
 
-    {
-        id: 6,
-        name: "Cruffin Oreo",
-        stock: 0,
-        active: true
-    },
+{
+id:6,
+name:"Croissant macaron fresas con crema",
+category:"Croissant especial",
+stockGroup:"croissant_fresa",
+price:0,
+cafePrice:0,
+stock:0,
+active:true
+},
 
-    {
-        id: 7,
-        name: "NY Cookie",
-        stock: 0,
-        active: true
-    },
+{
+id:7,
+name:"Chocolatín",
+category:"Pan laminado",
+stockGroup:"chocolatin",
+price:0,
+cafePrice:0,
+stock:0,
+active:true
+},
 
-    {
-        id: 8,
-        name: "Brownie",
-        stock: 0,
-        active: true
-    },
+{
+id:8,
+name:"Suizo coco mango y maracuyá",
+category:"Suizo",
+stockGroup:"suizo_coco",
+price:0,
+cafePrice:0,
+stock:0,
+active:true
+},
 
-    {
-        id: 9,
-        name: "Macaron",
-        stock: 0,
-        active: true
-    }
+{
+id:9,
+name:"Suizo avellana chocolate y caramelo",
+category:"Suizo",
+stockGroup:"suizo_avellana",
+price:0,
+cafePrice:0,
+stock:0,
+active:true
+},
+
+{
+id:10,
+name:"Trenza frutos rojos",
+category:"Pan laminado",
+stockGroup:"trenza_frutos_rojos",
+price:0,
+cafePrice:0,
+stock:0,
+active:true
+},
+
+{
+id:11,
+name:"Danesa cajeta",
+category:"Danesa",
+stockGroup:"danesa",
+price:0,
+cafePrice:0,
+stock:0,
+active:true
+},
+
+{
+id:12,
+name:"Danesa mango",
+category:"Danesa",
+stockGroup:"danesa",
+price:0,
+cafePrice:0,
+stock:0,
+active:true
+},
+
+{
+id:13,
+name:"Cruffin guayaba con queso",
+category:"Cruffin",
+stockGroup:"cruffin",
+price:0,
+cafePrice:0,
+stock:0,
+active:true
+},
+
+{
+id:14,
+name:"Cruffin Carlota con merengue",
+category:"Cruffin",
+stockGroup:"cruffin",
+price:0,
+cafePrice:0,
+stock:0,
+active:true
+},
+
+{
+id:15,
+name:"Monkey Nutella",
+category:"Monkey",
+stockGroup:"monkey_nutella",
+price:0,
+cafePrice:0,
+stock:0,
+active:true
+},
+
+{
+id:16,
+name:"Monkey Mojito",
+category:"Monkey",
+stockGroup:"monkey_mojito",
+price:0,
+cafePrice:0,
+stock:0,
+active:true
+}
 
 ];
 
 
 
-// Inicializar base de datos
+
+// Inicializar
 
 function initializeStorage(){
 
@@ -110,7 +224,6 @@ function initializeStorage(){
 
 
 
-// Obtener productos
 
 function getProducts(){
 
@@ -121,8 +234,6 @@ function getProducts(){
 }
 
 
-
-// Guardar productos
 
 function saveProducts(products){
 
@@ -135,7 +246,6 @@ function saveProducts(products){
 
 
 
-// Obtener historial
 
 function getHistory(){
 
@@ -147,7 +257,6 @@ function getHistory(){
 
 
 
-// Guardar historial
 
 function saveHistory(history){
 
