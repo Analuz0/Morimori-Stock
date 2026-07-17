@@ -202,15 +202,16 @@ active:true
 function initializeStorage(){
 
 
-    localStorage.removeItem(
-        STORAGE_KEYS.products
-    );
+    if(!localStorage.getItem(STORAGE_KEYS.products)){
 
 
-    localStorage.setItem(
-        STORAGE_KEYS.products,
-        JSON.stringify(defaultProducts)
-    );
+        localStorage.setItem(
+            STORAGE_KEYS.products,
+            JSON.stringify(defaultProducts)
+        );
+
+
+    }
 
 
 
@@ -224,6 +225,9 @@ function initializeStorage(){
 
 
     }
+
+
+}
 
 
 }
