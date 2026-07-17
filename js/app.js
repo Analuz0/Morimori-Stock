@@ -51,10 +51,7 @@ function openSection(section){
 
         case "production":
 
-            content.innerHTML = `
-                <h2>➕ Producción</h2>
-                <p>Próximamente podrás registrar producción.</p>
-            `;
+           showProduction();
 
         break;
 
