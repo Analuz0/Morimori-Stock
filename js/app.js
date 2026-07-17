@@ -2,10 +2,7 @@
 // Aplicación principal
 
 
-// Iniciar almacenamiento
-
 initializeStorage();
-
 
 
 const buttons = document.querySelectorAll(".menu-btn");
@@ -15,195 +12,124 @@ const content = document.getElementById("content");
 
 buttons.forEach(button => {
 
-
     button.addEventListener("click", () => {
 
-
-        const section = button.dataset.section;
-
-
-        openSection(section);
-
+        openSection(button.dataset.section);
 
     });
-
 
 });
 
 
 
-
-
 function openSection(section){
-
-
 
     switch(section){
 
-
         case "inventory":
-
             showInventory();
-
         break;
-
 
 
         case "production":
-
-           showProduction();
-
+            showProduction();
         break;
-
 
 
         case "sales":
-
-            content.innerHTML = `
-                <h2>➖ Venta</h2>
-                <p>Próximamente podrás registrar ventas.</p>
-            `;
-
+            showSale();
         break;
-
 
 
         case "waste":
-
-            content.innerHTML = `
-                <h2>🗑️ Merma</h2>
-                <p>Próximamente podrás registrar mermas.</p>
-            `;
-
+            showWaste();
         break;
-
 
 
         case "history":
-
-            content.innerHTML = `
-                <h2>📜 Historial</h2>
-                <p>Próximamente aparecerán los movimientos.</p>
-            `;
-
+            showHistory();
         break;
-
 
 
         case "stats":
-
-            content.innerHTML = `
-                <h2>📊 Estadísticas</h2>
-                <p>Próximamente aparecerán las estadísticas.</p>
-            `;
-
+            showStats();
         break;
-
 
 
         case "products":
-
-            content.innerHTML = `
-                <h2>⚙️ Productos</h2>
-                <p>Próximamente podrás administrar productos.</p>
-            `;
-
+            showProducts();
         break;
 
-
     }
-
 
 }
 
 
 
 
+// =================
+// INVENTARIO
+// =================
 
-// Mostrar inventario
 
 function showInventory(){
-
 
     const products = getProducts();
 
 
-
     let html = `
-
-        <h2>📦 Inventario</h2>
-
-        <div class="inventory-list">
-
+    <h2>📦 Inventario</h2>
     `;
 
 
-
-    products.forEach(product => {
-
+    products.forEach(product=>{
 
         if(product.active){
 
-
             html += `
-
             <div class="product-card">
-
                 <strong>${product.name}</strong>
-
-                <span>
-                    ${product.stock}
-                </span>
-
+                <span>${product.stock}</span>
             </div>
-
             `;
 
-
         }
-
 
     });
 
 
-
-    html += `
-
-        </div>
-
-    `;
-
-
-
     content.innerHTML = html;
 
-
 }
+
+
+
+// =================
+// PRODUCCIÓN
+// =================
+
+
 function showProduction(){
 
-    const products = getProducts();
+    const products=getProducts();
 
 
-    let html = `
+    let html=`
 
     <h2>➕ Producción</h2>
 
-    <label>
-        Producto
-    </label>
-
-    <select id="productionProduct">
+    <select id="movementProduct">
 
     `;
 
 
-    products.forEach(product => {
+    products.forEach(product=>{
 
         if(product.active){
 
-            html += `
+            html+=`
             <option value="${product.id}">
-                ${product.name}
+            ${product.name}
             </option>
             `;
 
@@ -212,34 +138,103 @@ function showProduction(){
     });
 
 
-    html += `
+    html+=`
 
     </select>
 
 
-    <label>
-        Cantidad
-    </label>
-
     <input 
-        id="productionAmount"
-        type="number"
-        placeholder="Ej. 24"
-    >
+    id="movementAmount"
+    type="number"
+    placeholder="Cantidad">
 
 
-    <button 
-        class="menu-btn"
-        onclick="addProduction()">
+    <button class="menu-btn" onclick="addProduction()">
+    Guardar producción
+    </button>
 
-        Guardar producción
+    `;
+
+
+    content.innerHTML=html;
+
+}
+
+
+
+
+function addProduction(){
+
+    makeMovement("Producción",1);
+
+}
+
+
+
+// =================
+// VENTAS
+// =================
+
+
+function showSale(){
+
+    showMovementForm("Venta",-1);
+
+}
+
+
+
+function showMovementForm(title,type){
+
+    const products=getProducts();
+
+
+    let html=`
+
+    <h2>${type===1?"➕":"➖"} ${title}</h2>
+
+    <select id="movementProduct">
+
+    `;
+
+
+    products.forEach(product=>{
+
+        if(product.active){
+
+            html+=`
+            <option value="${product.id}">
+            ${product.name} (Stock ${product.stock})
+            </option>
+            `;
+
+        }
+
+    });
+
+
+    html+=`
+
+    </select>
+
+
+    <input
+    id="movementAmount"
+    type="number"
+    placeholder="Cantidad">
+
+
+    <button class="menu-btn"
+    onclick="makeMovement('${title}',${type})">
+
+    Guardar
 
     </button>
 
     `;
 
 
-    content.innerHTML = html;
+    content.innerHTML=html;
 
 }
 
@@ -247,74 +242,218 @@ function showProduction(){
 
 
 
-function addProduction(){
+function makeMovement(type,operation){
 
 
-    const productId = Number(
-        document.getElementById("productionProduct").value
+    const id=Number(
+        document.getElementById("movementProduct").value
     );
 
 
-    const amount = Number(
-        document.getElementById("productionAmount").value
+    const amount=Number(
+        document.getElementById("movementAmount").value
     );
 
 
-    if(!amount || amount <= 0){
+    if(!amount || amount<=0){
 
-        alert("Ingresa una cantidad válida");
+        alert("Cantidad inválida");
+        return;
 
+    }
+
+
+    const products=getProducts();
+
+
+    const product=products.find(
+        p=>p.id===id
+    );
+
+
+
+    if(operation===-1 && product.stock<amount){
+
+        alert("No hay suficiente stock");
         return;
 
     }
 
 
 
-    const products = getProducts();
-
-
-    const product = products.find(
-        p => p.id === productId
-    );
-
-
-
-    product.stock += amount;
-
+    product.stock += amount*operation;
 
 
     saveProducts(products);
 
 
 
-    const history = getHistory();
+    const history=getHistory();
 
 
     history.push({
 
-        date: new Date().toLocaleString(),
+        date:new Date().toLocaleString(),
 
-        type: "Producción",
+        type:type,
 
-        product: product.name,
+        product:product.name,
 
-        quantity: amount
+        quantity:amount
 
     });
-
 
 
     saveHistory(history);
 
 
 
-    alert(
-        `✅ ${amount} ${product.name} agregados`
-    );
-
+    alert("✅ Movimiento guardado");
 
 
     showInventory();
 
+
+}
+
+
+
+
+// =================
+// MERMA
+// =================
+
+
+function showWaste(){
+
+    showMovementForm("Merma",-1);
+
+}
+
+
+
+// =================
+// HISTORIAL
+// =================
+
+
+function showHistory(){
+
+    const history=getHistory();
+
+
+    let html=`
+
+    <h2>📜 Historial</h2>
+
+    `;
+
+
+    if(history.length===0){
+
+        html+="<p>No hay movimientos</p>";
+
+    }
+
+
+    history.reverse().forEach(item=>{
+
+
+        html+=`
+
+        <div class="product-card">
+
+        <strong>${item.type}</strong><br>
+
+        ${item.product}
+        (${item.quantity})
+
+        <br>
+        <small>${item.date}</small>
+
+        </div>
+
+        `;
+
+
+    });
+
+
+
+    content.innerHTML=html;
+
+
+}
+
+
+
+// =================
+// ESTADÍSTICAS
+// =================
+
+
+function showStats(){
+
+    const history=getHistory();
+
+
+    let production=0;
+    let sales=0;
+    let waste=0;
+
+
+    history.forEach(item=>{
+
+
+        if(item.type==="Producción")
+        production+=item.quantity;
+
+
+        if(item.type==="Venta")
+        sales+=item.quantity;
+
+
+        if(item.type==="Merma")
+        waste+=item.quantity;
+
+
+    });
+
+
+
+    content.innerHTML=`
+
+    <h2>📊 Estadísticas</h2>
+
+    <p>Producción total: ${production}</p>
+
+    <p>Ventas totales: ${sales}</p>
+
+    <p>Merma total: ${waste}</p>
+
+    `;
+
+
+}
+
+
+
+// =================
+// PRODUCTOS
+// =================
+
+
+function showProducts(){
+
+    content.innerHTML=`
+
+    <h2>⚙️ Productos</h2>
+
+    <p>
+    Próximamente aquí editaremos catálogo,
+    precios normal y cafetería.
+    </p>
+
+    `;
 
 }
