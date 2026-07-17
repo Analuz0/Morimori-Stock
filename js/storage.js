@@ -200,12 +200,20 @@ active:true
 
 function initializeStorage(){
 
+    const version = localStorage.getItem("morimori_catalog_version");
 
-    if(!localStorage.getItem(STORAGE_KEYS.products)){
+
+    if(version !== "2"){
 
         localStorage.setItem(
             STORAGE_KEYS.products,
             JSON.stringify(defaultProducts)
+        );
+
+
+        localStorage.setItem(
+            "morimori_catalog_version",
+            "2"
         );
 
     }
@@ -220,6 +228,7 @@ function initializeStorage(){
 
     }
 
+}
 }
 
 
