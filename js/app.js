@@ -1,37 +1,49 @@
 // Morimori Stock
-// Aplicación de inventario
+// Aplicación principal
+
+
+// Iniciar almacenamiento
+
+initializeStorage();
+
 
 
 const buttons = document.querySelectorAll(".menu-btn");
 const content = document.getElementById("content");
 
 
+
 buttons.forEach(button => {
+
 
     button.addEventListener("click", () => {
 
+
         const section = button.dataset.section;
+
 
         openSection(section);
 
+
     });
+
 
 });
 
 
 
-function openSection(section) {
 
 
-    switch(section) {
+function openSection(section){
+
+
+
+    switch(section){
 
 
         case "inventory":
 
-            content.innerHTML = `
-                <h2>📦 Inventario</h2>
-                <p>Aquí aparecerá tu stock actual.</p>
-            `;
+            showInventory();
 
         break;
 
@@ -41,7 +53,7 @@ function openSection(section) {
 
             content.innerHTML = `
                 <h2>➕ Producción</h2>
-                <p>Registrar nuevas piezas producidas.</p>
+                <p>Próximamente podrás registrar producción.</p>
             `;
 
         break;
@@ -52,7 +64,7 @@ function openSection(section) {
 
             content.innerHTML = `
                 <h2>➖ Venta</h2>
-                <p>Registrar productos vendidos.</p>
+                <p>Próximamente podrás registrar ventas.</p>
             `;
 
         break;
@@ -63,7 +75,7 @@ function openSection(section) {
 
             content.innerHTML = `
                 <h2>🗑️ Merma</h2>
-                <p>Registrar productos perdidos o descartados.</p>
+                <p>Próximamente podrás registrar mermas.</p>
             `;
 
         break;
@@ -74,7 +86,7 @@ function openSection(section) {
 
             content.innerHTML = `
                 <h2>📜 Historial</h2>
-                <p>Aquí aparecerán todos los movimientos.</p>
+                <p>Próximamente aparecerán los movimientos.</p>
             `;
 
         break;
@@ -85,7 +97,7 @@ function openSection(section) {
 
             content.innerHTML = `
                 <h2>📊 Estadísticas</h2>
-                <p>Aquí veremos producción, ventas y mermas históricas.</p>
+                <p>Próximamente aparecerán las estadísticas.</p>
             `;
 
         break;
@@ -96,13 +108,77 @@ function openSection(section) {
 
             content.innerHTML = `
                 <h2>⚙️ Productos</h2>
-                <p>Aquí podrás administrar tu catálogo.</p>
+                <p>Próximamente podrás administrar productos.</p>
             `;
 
         break;
 
 
     }
+
+
+}
+
+
+
+
+
+// Mostrar inventario
+
+function showInventory(){
+
+
+    const products = getProducts();
+
+
+
+    let html = `
+
+        <h2>📦 Inventario</h2>
+
+        <div class="inventory-list">
+
+    `;
+
+
+
+    products.forEach(product => {
+
+
+        if(product.active){
+
+
+            html += `
+
+            <div class="product-card">
+
+                <strong>${product.name}</strong>
+
+                <span>
+                    ${product.stock}
+                </span>
+
+            </div>
+
+            `;
+
+
+        }
+
+
+    });
+
+
+
+    html += `
+
+        </div>
+
+    `;
+
+
+
+    content.innerHTML = html;
 
 
 }
